@@ -7,43 +7,58 @@ class EmployeesController extends \BaseController {
 	 *
 	 * @return Response
 	 */
+	protected $registration_form_rules = array(
+		'photo' => 'image|max:3000',
+		'photo' => 'required|mimes:jpg,jpeg,bmp,png',
+		'first_name' => 'required|alpha|min:3',
+		'last_name'  => 'required',
+		'email' => 'required|email|unique:employees',           // required and has to match the password field
+	);
+	public function __construct(){
+
+	}
 	public function index()
 	{
 		$employees_all = Employees::all();
 		return View::make('employees.index',compact('employees_all'));
 	}
 
-
-	/**
-	 * Show the form for creating a new resource.
-	 *
-	 * @return Response
-	 */
 	public function create()
 	{
 		return View::make('employees.create');
 	}
 
-
-	/**
-	 * Store a newly created resource in storage.
-	 *
-	 * @return Response
-	 */
 	public function store()
 	{
 		$first_name= Input::get('first_name');
 		$last_name= Input::get('last_name');
 		$email= Input::get('email');
+		$image=Input::file('photo');
 		$input_data= Input::all();
 		$employees = new Employees();
 
+
 		//validation check
-		if ($employees->validate($input_data)){
+
+		$validator = Validator::make(Input::all(), $this->registration_form_rules);
+
+		// check if the validator failed -----------------------
+		if (!$validator->fails()) {
 
 				$employees->first_name = $first_name;
 				$employees->last_name = $last_name;
 				$employees->email = $email;
+			$img_dir = "images/employees/" . date("h-m-y");
+
+			if (!file_exists($img_dir)) {
+				mkdir($img_dir, 0777, true);
+			}
+			$filename = $image->getClientOriginalName();
+			$pathL = public_path($img_dir."-".$filename);
+			Image::make($image->getRealPath())->resize(900, 600)->save($pathL);
+			$employees->photo = $img_dir."-".$filename;
+
+
 				//insert data
 
 				if($employees->save()){
@@ -55,70 +70,38 @@ class EmployeesController extends \BaseController {
 					return Redirect::to('employees/create');
 				}
 		}else{
-			Session::flash('success', "Email already Exists. Try Again! ");
-			return Redirect::to('employees/create');
+			$messages = $validator->messages();
+			return Redirect::to('employees/create')->withErrors($validator);
 		}
 	}
 
-
-	/**
-	 * Display the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function show($id)
 	{
 		//
 	}
 
-
-	/**
-	 * Show the form for editing the specified resource.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function edit($id)
 	{
 		$employees = Employees::find($id);
-		// Load user/createOrUpdate.blade.php view
-		return View::make('employees.create')->with('employees', $employees);
+		return View::make('employees.create',compact('employees'));
 	}
-
-
-	/**
-	 * Update the specified resource in storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function update($id)
 	{
 		$data = Input::all();
 
 		$employees = Employees::find($id);
-
-		// attempt validation
 		if ($data) {
 
 			$employees->first_name = Input::get('first_name');
 			$employees->last_name = Input::get('last_name');
-			$employees->email = Input::get('email');
+			//update without email
+			//$employees->email = Input::get('email');
+			$employees->save();
+			Session::flash('success', 'Successfully Updated!');
+			return Redirect::to('/');
 		}
-
-		$employees->save();
-		Session::flash('success', 'Successfully Updated!');
-		return Redirect::to('/');
 	}
 
-
-	/**
-	 * Remove the specified resource from storage.
-	 *
-	 * @param  int  $id
-	 * @return Response
-	 */
 	public function destroy($id)
 	{
 		$employees = Employees::find($id);

@@ -20,6 +20,9 @@ Route::any('hello',function()
 	return View::make('test.index');
 });
 
+//route for login
+Route::any('login',['as'=>'employees.login','uses'=>'LoginController@index']);
+
 //route for student controller
 Route::any('student/create',['as'=>'student.create','uses'=>'StudentController@create']);
 Route::any('student/store',['as'=>'student.store','uses'=>'StudentController@store']);

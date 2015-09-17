@@ -1,6 +1,6 @@
 <?php
 
-class StudentController extends \BaseController {
+class LoginController extends \BaseController {
 
 	/**
 	 * Display a listing of the resource.
@@ -9,7 +9,7 @@ class StudentController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('login.index');
 	}
 
 
@@ -20,7 +20,7 @@ class StudentController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('student.create');
+		//
 	}
 
 
@@ -31,13 +31,7 @@ class StudentController extends \BaseController {
 	 */
 	public function store()
 	{
-		//var_dump($_POST);
-		$data = Input::all();
-		$student_email = $data['student_email'];
-		$student_address = $data['student_address'];
-		$student_name= Input::get('student_name');
-		return View::make('student.view', compact('student_email', 'student_name','student_address'));
-		//echo "Student Name: ".$student_name."<br>Student Email: ".$email."";
+		//
 	}
 
 
