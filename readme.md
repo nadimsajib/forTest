@@ -1,4 +1,4 @@
-## Laravel PHP Framework
+##Employee management system with Laravel
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
 [![Total Downloads](https://poser.pugx.org/laravel/framework/downloads.svg)](https://packagist.org/packages/laravel/framework)
@@ -14,11 +14,7 @@ Laravel is accessible, yet powerful, providing powerful tools needed for large, 
 
 ## Official Documentation
 
-Documentation for the entire framework can be found on the [Laravel website](http://laravel.com/docs).
-
-### Contributing To Laravel
-
-**All issues and pull requests should be filed on the [laravel/framework](http://github.com/laravel/framework) repository.**
+This Project is only create for learn laravel.
 
 ### License
 
