@@ -4,13 +4,14 @@
 @if(!isset($employees))
 <!-- if some field need to hide-->
 {{ Form::text('email',null,array('placeholder'=>'Email','class'=>'form-control')) }}<br>
-@endif
-
-{{ Form::label('','') }}
 <input class="form-control" name="photo" type="file" accept="image/*" onchange="showMyImage(this)"/>
 
 
 <img  id="thumbnil"  style="width:80px; margin-top:10px;"  src="" alt="image"/><br>
+@endif
+
+{{ Form::label('','') }}
+
 
 
 {{ Form::submit('Save', ['name' => 'submit','class'=>'btn btn-default']) }}
