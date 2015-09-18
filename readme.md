@@ -17,11 +17,19 @@ Udate section is only for First Name and Last Name(Working)
 ## Installation
 
 1.Clone the repo: git clone https://github.com/nadimsajib/fortest.git
+
 2.change directory: cd fortest/
+
+(Windows users must include the bundled php_fileinfo.dll DLL file in php.ini to enable this extension)
+
 3.Install Laravel: composer install --prefer-dist
+
 4.Update composer: composer update
+
 5.Change your database settings in app/config/database.php
+
 6.Migrate your database: php artisan migrate
+
 7.View your application in browser.
 
 This Project is only create for learn laravel.
